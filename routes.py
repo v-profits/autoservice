@@ -95,7 +95,8 @@ def create_routes(app):
         if request.method == 'POST':
             name = request.form['name']
             price = float(request.form['price'])
-            execution_date = datetime.strptime(request.form['execution_date'], '%Y-%m-%d').date()
+            execution_date_str = request.form.get('execution_date')
+            execution_date = datetime.strptime(execution_date_str, '%Y-%m-%d').date() if execution_date_str else None
             description = request.form['description']
             new_service = Service(name=name, price=price, execution_date=execution_date, description=description)
             db.session.add(new_service)
@@ -109,7 +110,8 @@ def create_routes(app):
         if request.method == 'POST':
             service.name = request.form['name']
             service.price = float(request.form['price'])
-            service.execution_date = datetime.strptime(request.form['execution_date'], '%Y-%m-%d').date()
+            execution_date_str = request.form.get('execution_date')
+            service.execution_date = datetime.strptime(execution_date_str, '%Y-%m-%d').date() if execution_date_str else None
             service.description = request.form['description']
             db.session.commit()
             return redirect(url_for('services'))

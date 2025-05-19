@@ -10,5 +10,4 @@ spec:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-#      nodePort: 30001
-      nodePort: 31500  # ✅ В пределах допустимого диапазона
+      nodePort: 30001
