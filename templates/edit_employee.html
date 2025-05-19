@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Редактировать' if employee else 'Добавить' }} сотрудника{% endblock %}
+{% block content %}
+<h2>{{ 'Редактировать' if employee else 'Добавить' }} сотрудника</h2>
+<form method="post">
+    <label>ФИО:<br>
+        <input type="text" name="name" value="{{ employee.name if employee else '' }}" required>
+    </label><br><br>
+
+    <label>Должность:<br>
+        <input type="text" name="position" value="{{ employee.position if employee else '' }}">
+    </label><br><br>
+
+    <label>Специализация:<br>
+        <input type="text" name="specialization" value="{{ employee.specialization if employee else '' }}">
+    </label><br><br>
+
+    <label>Описание:<br>
+        <textarea name="description">{{ employee.description if employee else '' }}</textarea>
+    </label><br><br>
+
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}

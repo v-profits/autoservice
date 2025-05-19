@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Добавить услугу к заказу{% endblock %}
+{% block content %}
+<h2>Добавить услугу к заказу №{{ order.id }}</h2>
+
+<form method="post">
+    <label>Выберите услугу:<br>
+        <select name="service_id" required>
+            {% for service in services %}
+            <option value="{{ service.id }}">{{ service.name }} — {{ service.price }} ₽</option>
+            {% endfor %}
+        </select>
+    </label><br><br>
+
+    <label>Количество:<br>
+        <input type="number" name="quantity" value="1" min="1" required>
+    </label><br><br>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<p><a href="{{ url_for('orders') }}">← Назад к заказам</a></p>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Сотрудники{% endblock %}
+{% block content %}
+<h2>Сотрудники</h2>
+<a href="{{ url_for('add_employee') }}">Добавить сотрудника</a>
+<table>
+    <tr>
+        <th>ФИО</th><th>Должность</th><th>Специализация</th><th>Описание</th><th>Действия</th>
+    </tr>
+    {% for employee in employees %}
+    <tr>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.position }}</td>
+        <td>{{ employee.specialization }}</td>
+        <td>{{ employee.description }}</td>
+        <td>
+            <a href="{{ url_for('edit_employee', id=employee.id) }}">Редактировать</a> |
+            <a href="{{ url_for('delete_employee', id=employee.id) }}" onclick="return confirm('Удалить?');">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

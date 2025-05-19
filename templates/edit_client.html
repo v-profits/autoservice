@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Редактировать' if client else 'Добавить' }} клиента{% endblock %}
+{% block content %}
+<h2>{{ 'Редактировать' if client else 'Добавить' }} клиента</h2>
+<form method="post">
+    <label>ФИО:<br>
+        <input type="text" name="name" value="{{ client.name if client else '' }}" required>
+    </label><br><br>
+
+    <label>Телефон:<br>
+        <input type="text" name="phone" value="{{ client.phone if client else '' }}">
+    </label><br><br>
+
+    <label>Email:<br>
+        <input type="email" name="email" value="{{ client.email if client else '' }}">
+    </label><br><br>
+
+    <label>Описание:<br>
+        <textarea name="description" rows="4">{{ client.description if client else '' }}</textarea>
+    </label><br><br>
+
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}

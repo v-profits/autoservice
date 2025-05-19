@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Редактировать' if order else 'Создать' }} заказ{% endblock %}
+{% block content %}
+<h2>{{ 'Редактировать' if order else 'Создать' }} заказ</h2>
+
+<form method="post">
+    <label>Автомобиль:<br>
+        <select name="vehicle_id" required {% if order %}disabled{% endif %}>
+            {% for vehicle in vehicles %}
+            <option value="{{ vehicle.id }}"
+                    {% if order and order.vehicle_id == vehicle.id %}selected{% endif %}>
+                {{ vehicle.id }} — {{ vehicle.make }} {{ vehicle.model }}
+            </option>
+            {% endfor %}
+        </select>
+    </label><br><br>
+
+    <label>Дата:<br>
+        <input type="date" name="date_created"
+               value="{{ order.date_created if order else '' }}" required>
+    </label><br><br>
+
+    <label>Статус:<br>
+        <select name="status" required>
+            <option value="новый" {% if order and order.status == 'новый' %}selected{% endif %}>Новый</option>
+            <option value="в процессе" {% if order and order.status == 'в процессе' %}selected{% endif %}>В процессе</option>
+            <option value="выполнен" {% if order and order.status == 'выполнен' %}selected{% endif %}>Выполнен</option>
+        </select>
+    </label><br><br>
+
+    <label>Описание:<br>
+        <textarea name="description" rows="4">{{ order.description if order else '' }}</textarea>
+    </label><br><br>
+
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}

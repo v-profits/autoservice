@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Автомастерская{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+<header>
+    <h1>Автомастерская</h1>
+    <nav>
+        <a href="{{ url_for('index') }}">Главная</a> |
+        <a href="{{ url_for('clients') }}">Клиенты</a> |
+        <a href="{{ url_for('vehicles') }}">Автомобили</a> |
+        <a href="{{ url_for('services') }}">Услуги</a> |
+        <a href="{{ url_for('employees') }}">Сотрудники</a> |
+        <a href="{{ url_for('orders') }}">Заказы</a>
+    </nav>
+    <hr />
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Автомобили{% endblock %}
+{% block content %}
+<h2>Автомобили</h2>
+<a href="{{ url_for('add_vehicle') }}">Добавить автомобиль</a>
+<table>
+    <tr>
+        <th>Клиент</th><th>Марка</th><th>Модель</th><th>Год</th><th>VIN</th><th>Описание</th><th>Действия</th>
+    </tr>
+    {% for vehicle in vehicles %}
+    <tr>
+        <td>{{ vehicle.client_id }}</td>
+        <td>{{ vehicle.make }}</td>
+        <td>{{ vehicle.model }}</td>
+        <td>{{ vehicle.year }}</td>
+        <td>{{ vehicle.vin }}</td>
+        <td>{{ vehicle.description }}</td>
+        <td>
+            <a href="{{ url_for('edit_vehicle', id=vehicle.id) }}">Редактировать</a> |
+            <a href="{{ url_for('delete_vehicle', id=vehicle.id) }}" onclick="return confirm('Удалить?');">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

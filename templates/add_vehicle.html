@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Редактировать' if vehicle else 'Добавить' }} автомобиль{% endblock %}
+{% block content %}
+<h2>{{ 'Редактировать' if vehicle else 'Добавить' }} автомобиль</h2>
+<form method="post">
+    <label>Клиент (ID):<br>
+        <input type="number" name="client_id" value="{{ vehicle.client_id if vehicle else '' }}" required>
+    </label><br><br>
+
+    <label>Марка:<br>
+        <input type="text" name="make" value="{{ vehicle.make if vehicle else '' }}" required>
+    </label><br><br>
+
+    <label>Модель:<br>
+        <input type="text" name="model" value="{{ vehicle.model if vehicle else '' }}" required>
+    </label><br><br>
+
+    <label>Год:<br>
+        <input type="text" name="year" value="{{ vehicle.year if vehicle else '' }}">
+    </label><br><br>
+
+    <label>VIN:<br>
+        <input type="text" name="vin" value="{{ vehicle.vin if vehicle else '' }}">
+    </label><br><br>
+
+    <label>Описание:<br>
+        <textarea name="description">{{ vehicle.description if vehicle else '' }}</textarea>
+    </label><br><br>
+
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}
