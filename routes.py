@@ -102,7 +102,6 @@ def create_routes(app):
             db.session.add(new_service)
             db.session.commit()
             return redirect(url_for('services'))
-        # return render_template('add_service.html')
         return render_template('add_service.html', service=None)
 
 
