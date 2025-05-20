@@ -8,21 +8,23 @@
 <body>
 <header>
 
-<h1>Автомастерская "АвтоМастерПро"</h1>
+    <h1>Автомастерская "АвтоМастерПро"</h1>
 
+    {% if session.get('user_id') %}
     <p>Добро пожаловать в систему управления заказами и клиентами автомастерской!</p>
-
-<!--    <img src="{{ url_for('static', filename='garage.jpg') }}" alt="Автомастерская"-->
-<!--         style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 10px #999;">-->
+    {% else %}
+    <p>Для продолжения работы войдите в систему.</p>
+    {% endif %}
 
     <div style="float: right;">
-        {% if session.user_id %}
+        {% if session.get('user_id') %}
         <a href="{{ url_for('logout') }}">Выйти</a>
         {% else %}
         <a href="{{ url_for('login') }}">Войти</a>
         {% endif %}
     </div>
 
+    {% if session.get('user_id') %}
     <h3>Навигация по разделам:</h3>
     <nav>
         <a href="{{ url_for('index') }}">Главная</a> |
@@ -33,19 +35,7 @@
         <a href="{{ url_for('orders') }}">Заказы</a>
     </nav>
     <hr />
-
-<!--    <ul>-->
-<!--        <li><a href="{{ url_for('clients') }}">Клиенты</a></li>-->
-<!--        <li><a href="{{ url_for('vehicles') }}">Автомобили</a></li>-->
-<!--        <li><a href="{{ url_for('services') }}">Услуги</a></li>-->
-<!--        <li><a href="{{ url_for('employees') }}">Сотрудники</a></li>-->
-<!--        <li><a href="{{ url_for('orders') }}">Заказы</a></li>-->
-<!--    </ul>-->
-
-<!--    <h3>Контакты и режим работы:</h3>-->
-<!--    <p><strong>Телефон:</strong> +7 (900) 000-00-00</p>-->
-<!--    <p><strong>Email:</strong> support@autoservice.ru</p>-->
-<!--    <p><strong>Время работы:</strong> Пн–Сб: 09:00–19:00, Вс: выходной</p>-->
+    {% endif %}
 
 </header>
 
@@ -56,3 +46,63 @@
 
 </body>
 </html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8" />-->
+<!--    <title>{% block title %}Автомастерская{% endblock %}</title>-->
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+
+<!--<h1>Автомастерская "АвтоМастерПро"</h1>-->
+
+<!--    <p>Добро пожаловать в систему управления заказами и клиентами автомастерской!</p>-->
+
+<!--&lt;!&ndash;    <img src="{{ url_for('static', filename='garage.jpg') }}" alt="Автомастерская"&ndash;&gt;-->
+<!--&lt;!&ndash;         style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 10px #999;">&ndash;&gt;-->
+
+<!--    <div style="float: right;">-->
+<!--        {% if session.user_id %}-->
+<!--        <a href="{{ url_for('logout') }}">Выйти</a>-->
+<!--        {% else %}-->
+<!--        <a href="{{ url_for('login') }}">Войти</a>-->
+<!--        {% endif %}-->
+<!--    </div>-->
+
+<!--    <h3>Навигация по разделам:</h3>-->
+<!--    <nav>-->
+<!--        <a href="{{ url_for('index') }}">Главная</a> |-->
+<!--        <a href="{{ url_for('clients') }}">Клиенты</a> |-->
+<!--        <a href="{{ url_for('vehicles') }}">Автомобили</a> |-->
+<!--        <a href="{{ url_for('services') }}">Услуги</a> |-->
+<!--        <a href="{{ url_for('employees') }}">Сотрудники</a> |-->
+<!--        <a href="{{ url_for('orders') }}">Заказы</a>-->
+<!--    </nav>-->
+<!--    <hr />-->
+
+<!--&lt;!&ndash;    <ul>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li><a href="{{ url_for('clients') }}">Клиенты</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li><a href="{{ url_for('vehicles') }}">Автомобили</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li><a href="{{ url_for('services') }}">Услуги</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li><a href="{{ url_for('employees') }}">Сотрудники</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li><a href="{{ url_for('orders') }}">Заказы</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;    </ul>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <h3>Контакты и режим работы:</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;    <p><strong>Телефон:</strong> +7 (900) 000-00-00</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    <p><strong>Email:</strong> support@autoservice.ru</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    <p><strong>Время работы:</strong> Пн–Сб: 09:00–19:00, Вс: выходной</p>&ndash;&gt;-->
+
+<!--</header>-->
+
+<!--<main>-->
+<!--    {% block content %}-->
+<!--    {% endblock %}-->
+<!--</main>-->
+
+<!--</body>-->
+<!--</html>-->
