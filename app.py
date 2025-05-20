@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from models import db, User  # добавили импорт User
+from models import db, User
 from routes import create_routes
 
 app = Flask(__name__)
@@ -11,15 +11,12 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
-
-create_routes(app)
-
-@app.before_first_request
-def create_user():
     if not User.query.first():
         admin = User(username='admin', password='admin')
         db.session.add(admin)
         db.session.commit()
+
+create_routes(app)
 
 @app.route('/')
 def index():
