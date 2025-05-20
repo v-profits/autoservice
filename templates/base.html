@@ -24,13 +24,22 @@
     </div>
 
     <h3>Навигация по разделам:</h3>
-    <ul>
-        <li><a href="{{ url_for('clients') }}">Клиенты</a></li>
-        <li><a href="{{ url_for('vehicles') }}">Автомобили</a></li>
-        <li><a href="{{ url_for('services') }}">Услуги</a></li>
-        <li><a href="{{ url_for('employees') }}">Сотрудники</a></li>
-        <li><a href="{{ url_for('orders') }}">Заказы</a></li>
-    </ul>
+    <nav>
+        <a href="{{ url_for('index') }}">Главная</a> |
+        <a href="{{ url_for('clients') }}">Клиенты</a> |
+        <a href="{{ url_for('vehicles') }}">Автомобили</a> |
+        <a href="{{ url_for('services') }}">Услуги</a> |
+        <a href="{{ url_for('employees') }}">Сотрудники</a> |
+        <a href="{{ url_for('orders') }}">Заказы</a>
+    </nav>
+
+<!--    <ul>-->
+<!--        <li><a href="{{ url_for('clients') }}">Клиенты</a></li>-->
+<!--        <li><a href="{{ url_for('vehicles') }}">Автомобили</a></li>-->
+<!--        <li><a href="{{ url_for('services') }}">Услуги</a></li>-->
+<!--        <li><a href="{{ url_for('employees') }}">Сотрудники</a></li>-->
+<!--        <li><a href="{{ url_for('orders') }}">Заказы</a></li>-->
+<!--    </ul>-->
 
     <h3>Контакты и режим работы:</h3>
     <p><strong>Телефон:</strong> +7 (900) 000-00-00</p>
