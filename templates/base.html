@@ -8,14 +8,14 @@
 <body>
 <header>
 
-    <h2>Автомастерская "АвтоМастерПро"</h2>
+    <h1>Автомастерская "АвтоМастерПро"</h1>
 
     <p>Добро пожаловать в систему управления заказами и клиентами автомастерской!</p>
 
 <!--    <img src="{{ url_for('static', filename='garage.jpg') }}" alt="Автомастерская"-->
 <!--         style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 10px #999;">-->
 
-    <div style="float: right;">
+    <div style="float: left;">
         {% if session.user_id %}
         <a href="{{ url_for('logout') }}">Выйти</a>
         {% else %}
@@ -41,10 +41,10 @@
 <!--        <li><a href="{{ url_for('orders') }}">Заказы</a></li>-->
 <!--    </ul>-->
 
-    <h3>Контакты и режим работы:</h3>
-    <p><strong>Телефон:</strong> +7 (900) 000-00-00</p>
-    <p><strong>Email:</strong> support@autoservice.ru</p>
-    <p><strong>Время работы:</strong> Пн–Сб: 09:00–19:00, Вс: выходной</p>
+<!--    <h3>Контакты и режим работы:</h3>-->
+<!--    <p><strong>Телефон:</strong> +7 (900) 000-00-00</p>-->
+<!--    <p><strong>Email:</strong> support@autoservice.ru</p>-->
+<!--    <p><strong>Время работы:</strong> Пн–Сб: 09:00–19:00, Вс: выходной</p>-->
 
 </header>
 
