@@ -1,8 +1,28 @@
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
 from models import db, Client, Vehicle, Service, Employee, Order, OrderService, OrderEmployee
+from flask import session, flash
 
 def create_routes(app):
+
+    @app.route('/login', methods=['GET', 'POST'])
+    def login():
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            user = User.query.filter_by(username=username, password=password).first()
+            if user:
+                session['user_id'] = user.id
+                return redirect(url_for('index'))
+            else:
+                flash('Неверный логин или пароль')
+        return render_template('login.html')
+
+    @app.route('/logout')
+    def logout():
+        session.pop('user_id', None)
+        return redirect(url_for('index'))
+    
 
     # ---------------------- КЛИЕНТЫ ----------------------
     @app.route('/clients')

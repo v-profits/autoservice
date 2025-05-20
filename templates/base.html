@@ -1,11 +1,31 @@
-{% extends "base.html" %}
-{% block title %}Главная{% endblock %}
-{% block content %}
+<!--{% extends "base.html" %}-->
+<!--{% block title %}Главная{% endblock %}-->
+<!--{% block content %}-->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Автомастерская{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+<header>
+
 <h2>Автомастерская "АвтоМастерПро"</h2>
 
 <p>Добро пожаловать в систему управления заказами и клиентами автомастерской!</p>
 
 <img src="{{ url_for('static', filename='garage.jpg') }}" alt="Автомастерская" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 10px #999;">
+
+<div style="float: right;">
+    {% if session.user_id %}
+    <a href="{{ url_for('logout') }}">Выйти</a>
+    {% else %}
+    <a href="{{ url_for('login') }}">Войти</a>
+    {% endif %}
+</div>
+
 
 <h3>Навигация по разделам:</h3>
 <ul>

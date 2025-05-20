@@ -3,6 +3,9 @@ from models import db
 from routes import create_routes
 
 app = Flask(__name__)
+
+app.secret_key = 'автосервис73'  #  ключ
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
@@ -11,6 +14,15 @@ with app.app_context():
     db.create_all()
 
 create_routes(app)
+
+@app.before_first_request
+def create_user():
+    if not User.query.first():
+        db.create_all()
+        admin = User(username='admin', password='admin')
+        db.session.add(admin)
+        db.session.commit()
+
 
 @app.route('/')
 def index():
