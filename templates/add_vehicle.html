@@ -3,9 +3,14 @@
 {% block content %}
 <h2>{{ 'Редактировать' if vehicle else 'Добавить' }} автомобиль</h2>
 <form method="post">
-    <label>Клиент (ID):<br>
-        <input type="number" name="client_id" value="{{ vehicle.client_id if vehicle else '' }}" required>
-    </label><br><br>
+    <label for="client">Клиент:</label><br><br>
+    <select name="client_id" id="client" required>
+        {% for client in clients %}
+        <option value="{{ client.id }}" {% if vehicle and client.id == vehicle.client_id %}selected{% endif %}>
+            {{ client.name }}
+        </option>
+        {% endfor %}
+    </select><br><br>
 
     <label>Марка:<br>
         <input type="text" name="make" value="{{ vehicle.make if vehicle else '' }}" required>
@@ -17,6 +22,10 @@
 
     <label>Год:<br>
         <input type="text" name="year" value="{{ vehicle.year if vehicle else '' }}">
+    </label><br><br>
+
+    <label>Регистрационный номер:<br>
+        <input type="text" name="registration_number" value="{{ vehicle.registration_number if vehicle else '' }}">
     </label><br><br>
 
     <label>VIN:<br>

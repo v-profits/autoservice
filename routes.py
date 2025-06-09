@@ -1,34 +1,18 @@
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
 from models import db, Client, Vehicle, Service, Employee, Order, OrderService, OrderEmployee
-from flask import session, flash
 
 def create_routes(app):
-
-    @app.route('/login', methods=['GET', 'POST'])
-    def login():
-        if request.method == 'POST':
-            username = request.form['username']
-            password = request.form['password']
-            user = User.query.filter_by(username=username, password=password).first()
-            if user:
-                session['user_id'] = user.id
-                return redirect(url_for('index'))
-            else:
-                flash('Неверный логин или пароль')
-        return render_template('login.html')
-
-    @app.route('/logout')
-    def logout():
-        session.pop('user_id', None)
-        return redirect(url_for('index'))
-    
 
     # ---------------------- КЛИЕНТЫ ----------------------
     @app.route('/clients')
     def clients():
         all_clients = Client.query.all()
         return render_template('clients.html', clients=all_clients)
+
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
     @app.route('/add_client', methods=['GET', 'POST'])
     def add_client():
@@ -75,9 +59,10 @@ def create_routes(app):
             make = request.form['make']
             model = request.form['model']
             year = request.form['year']
+            registration_number = request.form['registration_number']
             vin = request.form['vin']
             description = request.form['description']
-            new_vehicle = Vehicle(client_id=client_id, make=make, model=model, year=year, vin=vin, description=description)
+            new_vehicle = Vehicle(client_id=client_id, make=make, model=model, year=year, registration_number=registration_number,  vin=vin, description=description)
             db.session.add(new_vehicle)
             db.session.commit()
             return redirect(url_for('vehicles'))
@@ -88,14 +73,26 @@ def create_routes(app):
     def edit_vehicle(id):
         vehicle = Vehicle.query.get_or_404(id)
         if request.method == 'POST':
+            vehicle.client_id = request.form['client_id']
             vehicle.make = request.form['make']
             vehicle.model = request.form['model']
             vehicle.year = request.form['year']
+            vehicle.registration_number = request.form['registration_number']
             vehicle.vin = request.form['vin']
             vehicle.description = request.form['description']
+
+            print("DEBUG: регистрационный номер:", request.form['registration_number'])
+            print("DEBUG: до изменения:", vehicle.registration_number)
+
             db.session.commit()
+
+            print("DEBUG: после изменения:", vehicle.registration_number)
+
             return redirect(url_for('vehicles'))
-        return render_template('edit_vehicle.html', vehicle=vehicle)
+
+        clients = Client.query.all()
+        return render_template('edit_vehicle.html', vehicle=vehicle, clients=clients)
+
 
     @app.route('/delete_vehicle/<int:id>')
     def delete_vehicle(id):

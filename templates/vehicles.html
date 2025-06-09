@@ -2,17 +2,25 @@
 {% block title %}Автомобили{% endblock %}
 {% block content %}
 <h2>Автомобили</h2>
-<a href="{{ url_for('add_vehicle') }}">Добавить автомобиль</a>
+<a href="{{ url_for('add_vehicle') }}" class="btn">Добавить автомобиль</a><br><br>
 <table>
     <tr>
-        <th>Клиент</th><th>Марка</th><th>Модель</th><th>Год</th><th>VIN</th><th>Описание</th><th>Действия</th>
+        <th>Клиент</th>
+        <th>Марка</th>
+        <th>Модель</th>
+        <th>Год</th>
+        <th>Рег. номер</th>
+        <th>VIN</th>
+        <th>Описание</th>
+        <th>Действия</th>
     </tr>
     {% for vehicle in vehicles %}
     <tr>
-        <td>{{ vehicle.client_id }}</td>
+        <td>{{ vehicle.client.name if vehicle.client else 'Неизвестно' }}</td>
         <td>{{ vehicle.make }}</td>
         <td>{{ vehicle.model }}</td>
         <td>{{ vehicle.year }}</td>
+        <td>{{ vehicle.registration_number }}</td>
         <td>{{ vehicle.vin }}</td>
         <td>{{ vehicle.description }}</td>
         <td>
@@ -22,4 +30,5 @@
     </tr>
     {% endfor %}
 </table>
+
 {% endblock %}

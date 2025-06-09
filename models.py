@@ -3,12 +3,10 @@ from datetime import date
 
 db = SQLAlchemy()
 
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    
 
 class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,16 +15,16 @@ class Client(db.Model):
     email = db.Column(db.String(100))
     description = db.Column(db.String(1000))
 
-
 class Vehicle(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=False)
     make = db.Column(db.String(50))
     model = db.Column(db.String(50))
     year = db.Column(db.String(10))  # оставим как строку, т.к. бывают нечисловые значения
+    registration_number = db.Column(db.String(20))
     vin = db.Column(db.String(100))
     description = db.Column(db.String(1000))
-
+    client = db.relationship('Client', backref=db.backref('vehicles', lazy=True))
 
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -35,7 +33,6 @@ class Service(db.Model):
     execution_date = db.Column(db.Date)  # ← дата
     description = db.Column(db.String(1000))
 
-
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -43,14 +40,18 @@ class Employee(db.Model):
     specialization = db.Column(db.String(100))
     description = db.Column(db.String(1000))
 
-
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicle.id'), nullable=False)
-    date_created = db.Column(db.Date)  # ← дата
+    date_created = db.Column(db.Date)
     status = db.Column(db.String(50))
     description = db.Column(db.String(1000))
 
+    vehicle = db.relationship('Vehicle', backref=db.backref('orders', lazy=True))
+
+    # связи через вспомогательные таблицы
+    services = db.relationship('OrderService', backref='order', lazy=True)
+    employees = db.relationship('OrderEmployee', backref='order', lazy=True)
 
 class OrderService(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -59,8 +60,11 @@ class OrderService(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     subtotal = db.Column(db.Float, nullable=False)
 
+    service = db.relationship('Service')
 
 class OrderEmployee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+
+    employee = db.relationship('Employee')

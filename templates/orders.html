@@ -2,7 +2,7 @@
 {% block title %}Заказы{% endblock %}
 {% block content %}
 <h2>Заказы</h2>
-<a href="{{ url_for('add_order') }}">Создать заказ</a>
+<a href="{{ url_for('add_order') }}" class="btn">Создать заказ</a><br><br>
 <table>
     <tr>
         <th>Автомобиль (ID)</th><th>Дата</th><th>Статус</th><th>Описание</th><th>Действия</th>
@@ -17,9 +17,46 @@
             <a href="{{ url_for('edit_order', id=order.id) }}">Редактировать</a> |
             <a href="{{ url_for('assign_service', order_id=order.id) }}">+ Услугу</a> |
             <a href="{{ url_for('assign_employee', order_id=order.id) }}">+ Сотрудника</a> |
+            <a href="#" onclick="showReport({{ order.id }}); return false;">Отчёт</a> |
             <a href="{{ url_for('delete_order', id=order.id) }}" onclick="return confirm('Удалить заказ?');">Удалить</a>
         </td>
+
     </tr>
     {% endfor %}
 </table>
+
+<div id="reportModal" style="display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%);
+     background: white; border: 1px solid #ccc; padding: 20px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); max-width: 600px;">
+    <h3>Отчёт по заказу</h3>
+    <div id="reportContent">Загрузка...</div>
+    <br>
+    <button onclick="saveReport()">Сохранить в файл</button>
+    <button onclick="closeReport()">Закрыть</button>
+</div>
+
+<!-- CSS стили для модального окна -->
+<script>
+    function showReport(orderId) {
+        fetch(`/order_report/${orderId}`)
+            .then(res => res.text())
+            .then(html => {
+            document.getElementById('reportContent').innerHTML = html;
+            document.getElementById('reportModal').style.display = 'block';
+        });
+    }
+
+    function closeReport() {
+        document.getElementById('reportModal').style.display = 'none';
+    }
+
+    function saveReport() {
+        const content = document.getElementById('reportContent').innerText;
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'order_report.txt';
+        a.click();
+    }
+</script>
+
 {% endblock %}

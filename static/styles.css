@@ -29,11 +29,12 @@ ul li {
 
 table {
     border-collapse: collapse;
-    width: 100%;
-    max-width: 900px;
+    table-layout: auto;  /* автоматическая подгонка ширины под содержимое */
+    max-width: 100%;
     background: white;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
+
 
 th, td {
     border: 1px solid #ddd;
@@ -44,4 +45,46 @@ th, td {
 th {
     background-color: #3498db;
     color: white;
+}
+
+/* Колонка 1 — Клиент */
+table td:nth-child(1),
+table th:nth-child(1) {
+    max-width: 250px;
+    min-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Колонка 2 — Марка */
+table td:nth-child(2),
+table th:nth-child(2) {
+    max-width: 120px;
+}
+
+/* Колонка 7 — Описание */
+table td:nth-child(7),
+table th:nth-child(7) {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    background-color: #f6f2eb; /* светло-бежевый */
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* эффект парения */
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: #ffe6be; /* чуть темнее при наведении */
+    cursor: pointer;
 }
