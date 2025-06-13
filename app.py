@@ -1,14 +1,23 @@
+import os
 from flask import Flask, render_template
 from models import db, User, Order
 from routes import create_routes
-
+from flask_sqlalchemy import SQLAlchemy
 from flask import render_template_string
 
 app = Flask(__name__)
 app.secret_key = 'автосервис73'
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+# Убедитесь, что папка под БД создана
+db_dir = os.path.join(basedir, "data")
+os.makedirs(db_dir, exist_ok=True)
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(db_dir, "autoservice.db")
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db.init_app(app)
 
 with app.app_context():
@@ -63,14 +72,9 @@ def order_report(order_id):
 
     return render_template_string(report_html)
 
-# @app.route('/')
-# def index():
-#     return render_template('base.html')
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', port=5000)
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -1,6 +1,10 @@
-from flask import render_template, request, redirect, url_for
 from datetime import datetime
-from models import db, Client, Vehicle, Service, Employee, Order, OrderService, OrderEmployee
+from flask import Flask, render_template, request, redirect, url_for, flash
+from models import db, Order, Vehicle, OrderService, OrderEmployee, Service, Employee, Client
+from datetime import date
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 
 def create_routes(app):
 
@@ -200,7 +204,7 @@ def create_routes(app):
         vehicles = Vehicle.query.all()
         return render_template('add_order.html', vehicles=vehicles)
 
-    @app.route('/edit_order/<int:id>', methods=['GET', 'POST'])
+    @app.route('/edit_order/<int:order_id>', methods=['GET', 'POST'])
     def edit_order(id):
         order = Order.query.get_or_404(id)
         if request.method == 'POST':
@@ -211,12 +215,19 @@ def create_routes(app):
             return redirect(url_for('orders'))
         return render_template('edit_order.html', order=order)
 
-    @app.route('/delete_order/<int:id>')
-    def delete_order(id):
-        order = Order.query.get_or_404(id)
-        db.session.delete(order)
+    @app.route('/orders/delete/<int:order_id>', methods=['POST'])
+    def delete_order(order_id):
+        # Удаляем связи с услугами
+        OrderService.query.filter_by(order_id=order_id).delete()
+        # Удаляем связи с сотрудниками
+        OrderEmployee.query.filter_by(order_id=order_id).delete()
+        # Удаляем сам заказ
+        order = Order.query.get(order_id)
+        if order:
+            db.session.delete(order)
         db.session.commit()
         return redirect(url_for('orders'))
+
 
     # ---------------------- ДОБАВЛЕНИЕ УСЛУГ К ЗАКАЗУ ----------------------
     @app.route('/assign_service/<int:order_id>', methods=['GET', 'POST'])
