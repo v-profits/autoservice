@@ -5,13 +5,15 @@
 <a href="{{ url_for('add_service') }}" class="btn">Добавить услугу</a><br><br>
 <table>
     <tr>
-        <th>Название</th><th>Цена</th><th>Дата</th><th>Описание</th><th>Действия</th>
+        <th>Название</th><th>Цена</th>
+<!--        <th>Дата</th>-->
+        <th>Описание</th><th>Действия</th>
     </tr>
     {% for service in services %}
     <tr>
         <td>{{ service.name }}</td>
         <td>{{ service.price }}</td>
-        <td>{{ service.execution_date }}</td>
+<!--        <td>{{ service.execution_date }}</td>-->
         <td>{{ service.description }}</td>
         <td>
             <a href="{{ url_for('edit_service', id=service.id) }}">Редактировать</a> |

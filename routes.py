@@ -204,16 +204,21 @@ def create_routes(app):
         vehicles = Vehicle.query.all()
         return render_template('add_order.html', vehicles=vehicles)
 
+
     @app.route('/edit_order/<int:order_id>', methods=['GET', 'POST'])
-    def edit_order(id):
-        order = Order.query.get_or_404(id)
+    def edit_order(order_id):
+        order = Order.query.get_or_404(order_id)
+        vehicles = Vehicle.query.all()
+
         if request.method == 'POST':
             order.date_created = datetime.strptime(request.form['date_created'], '%Y-%m-%d').date()
             order.status = request.form['status']
             order.description = request.form['description']
             db.session.commit()
             return redirect(url_for('orders'))
-        return render_template('edit_order.html', order=order)
+
+        return render_template('edit_order.html', order=order, vehicles=vehicles)
+
 
     @app.route('/orders/delete/<int:order_id>', methods=['POST'])
     def delete_order(order_id):

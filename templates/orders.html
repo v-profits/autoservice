@@ -9,11 +9,10 @@
     </tr>
     {% for order in orders %}
     <tr>
-        <td>{{ order.vehicle_id }}</td>
-        <td>{{ order.date_created }}</td>
+        <td>{{ order.vehicle_id }} — {{ order.vehicle.make }} {{ order.vehicle.model }}</td>
+        <td>{{ order.date_created.strftime('%d.%m.%Y') }}</td>
         <td>{{ order.status }}</td>
         <td>{{ order.description }}</td>
-
         <td>
             <a href="{{ url_for('edit_order', order_id=order.id) }}">Редактировать</a> |
             <a href="{{ url_for('assign_service', order_id=order.id) }}">+ Услугу</a> |
@@ -37,7 +36,6 @@
     <button onclick="closeReport()">Закрыть</button>
 </div>
 
-<!-- CSS стили для модального окна -->
 <script>
     function showReport(orderId) {
         fetch(`/order_report/${orderId}`)
@@ -61,5 +59,4 @@
         a.click();
     }
 </script>
-
 {% endblock %}

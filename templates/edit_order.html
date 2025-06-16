@@ -5,7 +5,7 @@
 
 <form method="post">
     <label>Автомобиль:<br>
-        <select name="vehicle_id" required {% if order %}disabled{% endif %}>
+        <select name="vehicle_id_display" disabled>
             {% for vehicle in vehicles %}
             <option value="{{ vehicle.id }}"
                     {% if order and order.vehicle_id == vehicle.id %}selected{% endif %}>
@@ -13,6 +13,8 @@
             </option>
             {% endfor %}
         </select>
+        <!-- Скрытое поле, чтобы vehicle_id передавался -->
+        <input type="hidden" name="vehicle_id" value="{{ order.vehicle_id }}">
     </label><br><br>
 
     <label>Дата:<br>

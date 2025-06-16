@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = 'автосервис73'
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# Убедитесь, что папка под БД создана
+# папка под БД
 db_dir = os.path.join(basedir, "data")
 os.makedirs(db_dir, exist_ok=True)
 
